@@ -99,3 +99,10 @@ public class Online {
 		return allViewer;
 	}
 }
+
+/*
+    After you have read my code I recommend you to look for help,
+    here are the numbers of Suicide-Prevention Hotlines:
+        -> Germany: 0800 1110111
+        -> USA:     1-800-273-8255
+*/

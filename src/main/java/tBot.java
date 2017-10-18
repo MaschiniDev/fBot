@@ -15,16 +15,23 @@ public class tBot extends PircBot {
 	public void onMessage(String channel, String sender, String login, String hostname, String message) {
 		String[] messagePart = message.split(" ");
 		
-		if (Tools.availableCommands.contains(messagePart[0])) {
-			sendMessage(channel, Tools.userCommand(sender, messagePart));
-		} else if (Tools.availableAdminCommands.contains(messagePart[0])) {
-			sendMessage(channel, Tools.adminCommands(sender, messagePart));
+		if (Tools.availableChannelCommands.contains(messagePart[0])) {
+			sendMessage(channel, Tools.channelCommands(sender, messagePart));
+		} else if (Tools.availableBotCommands.contains(messagePart[0])) {
+			sendMessage(channel, Tools.botCommands(sender, messagePart));
 		}
 	}
 	public void onJoin (String channel, String sender, String login, String hostname) {
-		Tools.listMod(sender, true);
+		Tools.listModifier(sender, true);
 	}
 	public void onPart (String channel, String sender, String login, String hostname) {
-		Tools.listMod(sender, false);
+		Tools.listModifier(sender, false);
 	}
 }
+
+/*
+    After you have read my code I recommend you to look for help,
+    here are the numbers of Suicide-Prevention Hotlines:
+        -> Germany: 0800 1110111
+        -> USA:     1-800-273-8255
+*/

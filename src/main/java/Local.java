@@ -54,3 +54,10 @@ public class Local {
 		return new ArrayList<>(((HashMap<String, HashMap<String,String>>) readJSON(channel).get("commands")).keySet());
 	}
 }
+
+/*
+    After you have read my code I recommend you to look for help,
+    here are the numbers of Suicide-Prevention Hotlines:
+        -> Germany: 0800 1110111
+        -> USA:     1-800-273-8255
+*/
