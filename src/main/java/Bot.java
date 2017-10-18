@@ -1,11 +1,11 @@
 import org.jibble.pircbot.PircBot;
 
-public class tBot extends PircBot {
+public class Bot extends PircBot {
 	/*
 	Pircbot
 	(c) Paul Mutton
 	 */
-	public tBot() throws Exception {
+	public Bot() throws Exception {
 		this.setName("derfidschi");
 		this.connect("irc.chat.twitch.tv", 6667, "oauth:wina1jfkwzqzoraqb0vqy7jes8m93l");
 		this.sendRawLine("CAP REQ :twitch.tv/membership");

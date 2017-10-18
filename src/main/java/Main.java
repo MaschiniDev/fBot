@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 public class Main {
 	
 	public static void main(String[] args) throws Exception {
-		tBot bot = new tBot();
+		Bot tBot = new Bot();
 		
 		BufferedReader consoleLine = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Channel?");
@@ -15,7 +15,7 @@ public class Main {
 		Tools.initData(channel);
 		
 		if (channel != null) {
-			bot.joinChannel("#" + channel);
+			tBot.joinChannel("#" + channel);
 		} else {
 			System.exit(404);
 		}

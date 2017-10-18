@@ -6,7 +6,7 @@
 
     <groupId>datenparty.org</groupId>
     <artifactId>FidschiBot</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>PRERELEASE-171019</version>
 
     <build>
         <plugins>
