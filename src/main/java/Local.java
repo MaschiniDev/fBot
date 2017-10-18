@@ -2,6 +2,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Local {
 	static JSONObject readJSON(String channel) throws Exception {
@@ -23,5 +25,13 @@ public class Local {
 	
 	static void writeJSON(String channel, JSONObject json) {
 	
+	}
+	
+	static HashMap<String, HashMap<String, Integer>> getAllUser (String channel) throws Exception {
+		return (HashMap<String, HashMap<String,Integer>>) readJSON(channel).get("users");
+	}
+	static HashMap<String, HashMap<String, String>> getCommands (String channel) throws Exception {
+		Tools.availableCommands = (ArrayList<String>) ((HashMap<String, HashMap<String,String>>) readJSON(channel).get("commands")).keySet();
+		return (HashMap<String, HashMap<String,String>>) readJSON(channel).get("commands");
 	}
 }

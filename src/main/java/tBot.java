@@ -12,11 +12,15 @@ public class tBot extends PircBot {
 		
 		this.setVerbose(false); //debug
 	}
-	
+	public void onMessage(String channel, String sender, String login, String hostname, String message) {
+		String[] messagewords = message.split(" ");
+		
+		if ()
+	}
 	public void onJoin (String channel, String sender, String login, String hostname) {
-		Tools.liveUser(sender, true);
+		Tools.listMod(sender, true);
 	}
 	public void onPart (String channel, String sender, String login, String hostname) {
-		Tools.liveUser(sender, false);
+		Tools.listMod(sender, false);
 	}
 }

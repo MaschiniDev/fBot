@@ -12,6 +12,7 @@ public class Main {
 		Online.getViewerInfos(channel);
 		
 		Tools.addAllLiveUser();
+		Tools.startClocks();
 		
 		if (channel != null) {
 			bot.joinChannel("#" + channel);
