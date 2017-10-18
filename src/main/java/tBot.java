@@ -13,9 +13,13 @@ public class tBot extends PircBot {
 		this.setVerbose(false); //debug
 	}
 	public void onMessage(String channel, String sender, String login, String hostname, String message) {
-		String[] messagewords = message.split(" ");
+		String[] messagePart = message.split(" ");
 		
-		if ()
+		if (Tools.availableCommands.contains(messagePart[0])) {
+			sendMessage(channel, Tools.userCommand(sender, messagePart));
+		} else if (Tools.availableAdminCommands.contains(messagePart[0])) {
+			sendMessage(channel, Tools.adminCommands(sender, messagePart));
+		}
 	}
 	public void onJoin (String channel, String sender, String login, String hostname) {
 		Tools.listMod(sender, true);

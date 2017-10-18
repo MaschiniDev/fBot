@@ -13,11 +13,15 @@ public class Main {
 		
 		Tools.addAllLiveUser();
 		Tools.startClocks();
+		Tools.initData(channel);
 		
 		if (channel != null) {
 			bot.joinChannel("#" + channel);
 		} else {
 			System.exit(404);
 		}
+		
+		System.out.println(Online.getMods());
+		System.out.println(Online.getViewers());
 	}
 }
