@@ -180,7 +180,6 @@ public class Tools {
 		System.out.println("saved");
 	}
 	
-	//TODO FIX THE NULLPOINTER!
 	static void startClocks() {
 		Thread timeClock = new Thread(new Runnable() {
 			@Override
