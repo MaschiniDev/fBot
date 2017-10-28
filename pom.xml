@@ -6,7 +6,7 @@
 
     <groupId>datenparty.org</groupId>
     <artifactId>FidschiBot</artifactId>
-    <version>171019</version>
+    <version>Dev</version>
 
     <dependencies>
         <dependency>

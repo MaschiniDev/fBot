@@ -13,7 +13,7 @@ public class Tools {
 	static ArrayList<String> availableBotCommands = new ArrayList<>();
 	private static List<String> live = new ArrayList<>();
 	private static List<String> mods = new ArrayList<>();
-	private static JSONObject json = new JSONObject();
+	private static JSONObject localData = new JSONObject();
 	
 	static void listModifier(String username, boolean add) {
 		if (add && !live.contains(username)) {
@@ -22,13 +22,19 @@ public class Tools {
 			live.remove(live.indexOf(username));
 		}
 		try {
-			if (!user.containsKey(username) && add) {
-				HashMap<String, Integer> userData = new HashMap<>();
-				userData.put("time", 0);
-				userData.put("points", 0);
-				
-				user.put(username, userData);
+			if (user != null) {
+				if (!user.containsKey(username) && !add) {
+					HashMap<String, Integer> userData = new HashMap<>();
+					userData.put("time", 0);
+					userData.put("points", 0);
+					
+					user.put(username, userData);
+					System.out.println(user);
+				}
+			} else {
+				System.out.println("user = " + user);
 			}
+			
 		} catch (NullPointerException npe) {
 			npe.printStackTrace();
 		}
@@ -139,10 +145,10 @@ public class Tools {
 	
 	static void initData(String channel) {
 		try {
-			json = Local.readJSON(channel);
-			user = Local.getAllUser(channel);
-			commands = Local.getCommands(channel);
-			availableChannelCommands = Local.getAvailableCommands(channel);
+			localData = Local.readJSON(channel);
+			user = getAllUser();
+			commands = getCommands();
+			availableChannelCommands = getAvailableCommands();
 			mods = Online.getMods();
 			
 			String[] aac = {"!help", "!list", "!add", "!remove", "!edit", "!me"};
@@ -152,13 +158,26 @@ public class Tools {
 		}
 	}
 	
-	static void addAllLiveUser() {
+	static HashMap<String, HashMap<String, Integer>> getAllUser () throws Exception {
+		return (HashMap<String, HashMap<String, Integer>>) localData.get("user");
+	}
+	static HashMap<String, HashMap<String, String>> getCommands () throws Exception {
+		return (HashMap<String, HashMap<String, String>>) localData.get("commands");
+	}
+	static ArrayList<String> getAvailableCommands() throws Exception {
+		return new ArrayList<>(((HashMap<String, HashMap<String,String>>) localData.get("commands")).keySet());
+	}
+		
+		
+		
+		static void addAllLiveUser() {
 		live.addAll(Online.getAllViewer());
 		System.out.println(live);
 	}
 	
 	static void saveData() {
 		Local.writeJSON(Main.getChannel(), commands, user);
+		System.out.println("saved");
 	}
 	
 	static void startClocks() {
@@ -182,7 +201,6 @@ public class Tools {
 				}
 			}
 		});
-		//timeClock.start();
 		
 		Thread pointClock = new Thread(new Runnable() {
 			@Override
@@ -204,7 +222,6 @@ public class Tools {
 				}
 			}
 		});
-		//pointClock.start();
 		
 		Thread autoSave = new Thread(new Runnable() {
 			@Override
@@ -220,7 +237,15 @@ public class Tools {
 				
 			}
 		});
-		//autoSave.start();
+		
+		
+		/*
+		Start Threads/Clocks/Timer
+		 */
+		timeClock.start();
+		pointClock.start();
+		autoSave.start();
+		
 	}
 }
 

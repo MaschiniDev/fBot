@@ -2,7 +2,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Local {
@@ -15,7 +14,7 @@ public class Local {
 		if (!file.exists() || new JSONParser().parse(new FileReader(fileName)) == null) {
 			try {
 				FileWriter fileWriter = new FileWriter(fileName);
-				fileWriter.write("{\"commands\":[],\"users\":[]}");
+				fileWriter.write("{\"commands\":{},\"users\":{}}");
 				fileWriter.flush();
 				fileWriter.close();
 			} catch (IOException ioe) {
@@ -44,15 +43,6 @@ public class Local {
 		
 	}
 	
-	static HashMap<String, HashMap<String, Integer>> getAllUser (String channel) throws Exception {
-		return (HashMap<String, HashMap<String,Integer>>) readJSON(channel).get("users");
-	}
-	static HashMap<String, HashMap<String, String>> getCommands (String channel) throws Exception {
-		return (HashMap<String, HashMap<String,String>>) readJSON(channel).get("commands");
-	}
-	static ArrayList<String> getAvailableCommands(String channel) throws Exception {
-		return new ArrayList<>(((HashMap<String, HashMap<String,String>>) readJSON(channel).get("commands")).keySet());
-	}
 }
 
 /*
