@@ -12,7 +12,7 @@ public class Local {
 			fileName = jsonname + ".json";
 		
 		File file = new File(fileName);
-		if (!file.exists()) {
+		if (!file.exists() || new JSONParser().parse(new FileReader(fileName)) == null) {
 			try {
 				FileWriter fileWriter = new FileWriter(fileName);
 				fileWriter.write("{\"commands\":[],\"users\":[]}");

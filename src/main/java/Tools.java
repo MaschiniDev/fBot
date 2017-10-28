@@ -1,5 +1,4 @@
 import org.json.simple.JSONObject;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,13 +21,16 @@ public class Tools {
 		} else if (!add) {
 			live.remove(live.indexOf(username));
 		}
-		
-		if (!user.containsKey(username) && add) {
-			HashMap<String, Integer> userData = new HashMap<>();
-			userData.put("time", 0);
-			userData.put("points", 0);
-			
-			user.put(username, userData);
+		try {
+			if (!user.containsKey(username) && add) {
+				HashMap<String, Integer> userData = new HashMap<>();
+				userData.put("time", 0);
+				userData.put("points", 0);
+				
+				user.put(username, userData);
+			}
+		} catch (NullPointerException npe) {
+			npe.printStackTrace();
 		}
 	}
 	
@@ -70,7 +72,7 @@ public class Tools {
 							response = "All commands available for this Channel: " + availableChannelCommands;
 							break;
 						default:
-							response = "Your command is now Available!";
+							response = "Default";
 					}
 					break;
 				case "!add":
@@ -130,7 +132,7 @@ public class Tools {
 		
 		switch (command) {
 			case "!me":
-				response = "Your Points: ";
+				response = user.get(sender).toString();
 		}
 		return response;
 	}
@@ -143,18 +145,21 @@ public class Tools {
 			availableChannelCommands = Local.getAvailableCommands(channel);
 			mods = Online.getMods();
 			
-			String[] aac = {"!help", "!list", "!add", "!remove", "!edit"};
+			String[] aac = {"!help", "!list", "!add", "!remove", "!edit", "!me"};
 			availableBotCommands =  new ArrayList<>(Arrays.asList(aac));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
 	static void addAllLiveUser() {
 		live.addAll(Online.getAllViewer());
 		System.out.println(live);
 	}
 	
-	
+	static void saveData() {
+		Local.writeJSON(Main.getChannel(), commands, user);
+	}
 	
 	static void startClocks() {
 		Thread timeClock = new Thread(new Runnable() {
@@ -177,7 +182,7 @@ public class Tools {
 				}
 			}
 		});
-		timeClock.start();
+		//timeClock.start();
 		
 		Thread pointClock = new Thread(new Runnable() {
 			@Override
@@ -199,9 +204,25 @@ public class Tools {
 				}
 			}
 		});
-		pointClock.start();
+		//pointClock.start();
+		
+		Thread autoSave = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						TimeUnit.MINUTES.sleep(10);
+						Local.writeJSON(Main.getChannel(), commands, user);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
+			}
+		});
+		//autoSave.start();
 	}
-	}
+}
 
 /*
     After you have read my code I recommend you to look for help,
