@@ -2,13 +2,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class Main {
+	private static String channel = null;
 	
 	public static void main(String[] args) throws Exception {
 		Bot tBot = new Bot();
 		
 		BufferedReader consoleLine = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Channel?");
-		String channel = consoleLine.readLine();
+		channel = consoleLine.readLine();
 		Online.getViewerInfos(channel);
 		
 		Tools.addAllLiveUser();
@@ -25,6 +26,16 @@ public class Main {
 		
 		//LAST THING
 		Tools.startClocks();
+		
+		while (true) {
+			if (consoleLine.readLine().equalsIgnoreCase("save")) {
+				Tools.saveData();
+			}
+		}
+	}
+	
+	static String getChannel() {
+		return channel;
 	}
 }
 
