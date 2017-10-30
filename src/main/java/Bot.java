@@ -12,6 +12,7 @@ public class Bot extends PircBot {
 		
 		this.setVerbose(false); //debug
 	}
+	
 	public void onMessage(String channel, String sender, String login, String hostname, String message) {
 		String[] messagePart = message.split(" ");
 		

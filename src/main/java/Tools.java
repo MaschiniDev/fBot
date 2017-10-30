@@ -1,16 +1,12 @@
 import org.json.simple.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class Tools {
 	private static HashMap<String, HashMap<String, Integer>> user = new HashMap<>();
 	private static HashMap<String, HashMap<String, String>> commands = new HashMap<>();
 	static ArrayList<String> availableChannelCommands = new ArrayList<>();
-	static ArrayList<String> availableBotCommands = new ArrayList<>();
+	static List<String> availableBotCommands = new ArrayList<>();
 	private static List<String> live = new ArrayList<>();
 	private static List<String> mods = new ArrayList<>();
 	private static JSONObject localData = new JSONObject();
@@ -18,9 +14,11 @@ public class Tools {
 	static void listModifier(String username, boolean add) {
 		if (add && !live.contains(username)) {
 			live.add(username);
+			System.out.println(username + "is now watching");
 		} else if (!add) {
 			live.remove(live.indexOf(username));
 		}
+		
 		try {
 			if (user != null) {
 				if (!user.containsKey(username) && !add) {
@@ -151,8 +149,7 @@ public class Tools {
 			availableChannelCommands = getAvailableCommands();
 			mods = Online.getMods();
 			
-			String[] aac = {"!help", "!list", "!add", "!remove", "!edit", "!me"};
-			availableBotCommands =  new ArrayList<>(Arrays.asList(aac));
+			availableBotCommands = List.of("!help", "!list", "!add", "!remove", "!edit", "!me");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -168,9 +165,7 @@ public class Tools {
 		return new ArrayList<>(((HashMap<String, HashMap<String,String>>) localData.get("commands")).keySet());
 	}
 		
-		
-		
-		static void addAllLiveUser() {
+	static void addAllLiveUser() {
 		live.addAll(Online.getAllViewer());
 		System.out.println(live);
 	}
@@ -191,10 +186,16 @@ public class Tools {
 						for (int i = 0; i < live.size(); i++) {
 							String username = live.get(i);
 							
-							listModifier(username, true);
 							HashMap<String, Integer> oneuser = user.get(username);
 							oneuser.put("time", (Integer.parseInt(String.valueOf(oneuser.get("time"))) + 1));
 						}
+						/* Test
+						for (Map.Entry<String, HashMap<String, Integer>> selectedUser : user.entrySet()) {
+							HashMap<String, Integer> update = selectedUser.getValue();
+							update.put("time", (update.get("time") + 1));
+							selectedUser.setValue(update);
+						}
+						*/
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
